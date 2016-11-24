@@ -55,7 +55,7 @@ class Organization(Creator):
     def to_value(self):
         """Tag/value representation of Organization entity."""
         if self.email is not None:
-            return 'Organization : {0} ({1})'.format(self.name, self.email)
+            return 'Organization: {0} ({1})'.format(self.name, self.email)
         else:
             return 'Organization: {0}'.format(self.name)
 
@@ -84,7 +84,7 @@ class Person(Creator):
     def to_value(self):
         """Tag/value representation of Person entity."""
         if self.email is not None:
-            return 'Person : {0} ({1})'.format(self.name, self.email)
+            return 'Person: {0} ({1})'.format(self.name, self.email)
         else:
             return 'Person: {0}'.format(self.name)
 
