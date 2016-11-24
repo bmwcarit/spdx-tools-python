@@ -80,7 +80,7 @@ def write_file(file, out):
     write_value('FileName', file.name, out)
     write_file_type(file.type, out)
     write_value('FileChecksum', file.chk_sum.to_tv(), out)
-    if isinstance(file.conc_lics, (document.LicenseConjuction, document.LicenseDisjunction)):
+    if isinstance(file.conc_lics, (document.LicenseConjunction, document.LicenseDisjunction)):
         write_value('LicenseConcluded', u'({0})'.format(file.conc_lics), out)
     else:
         write_value('LicenseConcluded', file.conc_lics, out)
@@ -135,12 +135,12 @@ def write_package(package, out):
     write_value('PackageVerificationCode', format_verif_code(package), out)
     if package.has_optional_field('description'):
         write_text_value('PackageDescription', package.description, out)
-    if isinstance(package.license_declared, (document.LicenseConjuction, 
+    if isinstance(package.license_declared, (document.LicenseConjunction,
         document.LicenseDisjunction)):
         write_value('PackageLicenseDeclared', u'({0})'.format(package.license_declared), out)
     else:
         write_value('PackageLicenseDeclared', package.license_declared, out)
-    if isinstance(package.conc_lics, (document.LicenseConjuction, 
+    if isinstance(package.conc_lics, (document.LicenseConjunction,
         document.LicenseDisjunction)):
         write_value('PackageLicenseConcluded', u'({0})'.format(package.conc_lics), out)
     else:
