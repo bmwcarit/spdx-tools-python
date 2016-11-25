@@ -1,7 +1,7 @@
 
 from distutils.core import setup
 setup(name='spdx',
-      version='0.1',
+      version='0.2',
       description='SPDX tag/value and RDF tools',
       packages=['spdx', 'spdx.parsers', 'spdx.writers', 'spdx.parsers.lexers'],
       author='Ahmed H. Ismail',
