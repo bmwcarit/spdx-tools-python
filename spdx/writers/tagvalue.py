@@ -220,8 +220,9 @@ def write_extracted_licenses(lics, out):
     """
     Write extracted licenses fields to out.
     """
-    write_value('LicenseID', lics.identifier, out)
 
+    write_value('LicenseID', 'LicenseRef-' + lics.identifier, out)
+    write_text_value('ExtractedText', lics.text, out)
     if lics.full_name is not None:
         write_value('LicenseName', lics.full_name, out)
 
@@ -251,7 +252,6 @@ def write_document(document, out, validate=True):
     out.write('# Document Information\n\n')
     write_value('SPDXVersion', str(document.version), out)
     write_value('DataLicense', document.data_license.identifier, out)
-    write_value('DocumentName', document.name, out)
     write_value('SPDXID', 'SPDXRef-DOCUMENT', out)
     write_value('DocumentNamespace', document.namespace, out)
     if document.has_comment:

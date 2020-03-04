@@ -150,7 +150,8 @@ class LicenseWriter(BaseWriter):
             license_node = BNode()
             type_triple = (license_node, RDF.type, self.spdx_namespace.ExtractedLicensingInfo)
             self.graph.add(type_triple)
-            ident_triple = (license_node, self.spdx_namespace.licenseId, Literal(lic.identifier))
+            ident_triple = (license_node, self.spdx_namespace.licenseId,
+                            Literal('LicenseRef-' + lic.identifier))
             self.graph.add(ident_triple)
             text_triple = (license_node, self.spdx_namespace.extractedText, Literal(lic.text))
             self.graph.add(text_triple)
@@ -210,8 +211,7 @@ class FileWriter(LicenseWriter):
         """
         Create a node for spdx.file.
         """
-        file_node = URIRef('http://www.spdx.org/files#{id}'.format(
-            id=str(doc_file.spdx_id)))
+        file_node = BNode()
         type_triple = (file_node, RDF.type, self.spdx_namespace.File)
         self.graph.add(type_triple)
 
@@ -602,8 +602,6 @@ class Writer(CreationInfoWriter, ReviewInfoWriter, FileWriter, PackageWriter,
         # Data license
         data_lics = URIRef(self.document.data_license.url)
         self.graph.add((doc_node, self.spdx_namespace.dataLicense, data_lics))
-        doc_name = URIRef(self.document.name)
-        self.graph.add((doc_node, self.spdx_namespace.name, doc_name))
         return doc_node
 
     def write(self):
@@ -642,7 +640,7 @@ class Writer(CreationInfoWriter, ReviewInfoWriter, FileWriter, PackageWriter,
         self.graph = to_isomorphic(self.graph)
 
         # Write file
-        self.graph.serialize(self.out, 'pretty-xml', encoding='utf-8')
+        self.out.write(self.graph.serialize(format='pretty-xml', encoding='utf-8').decode())
 
 
 def write_document(document, out, validate=True):
